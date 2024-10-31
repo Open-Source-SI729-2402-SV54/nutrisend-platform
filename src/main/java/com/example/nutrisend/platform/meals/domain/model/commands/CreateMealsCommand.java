@@ -7,7 +7,9 @@ public record CreateMealsCommand(
         double carbohydrates,
         double fats,
         double price,
-        String img
+        String img,
+        String categoryID,  // Nuevo campo
+        String typeID
 ) {
     public CreateMealsCommand {
         if (name == null || name.isBlank()) {
@@ -16,11 +18,26 @@ public record CreateMealsCommand(
         if (calories <= 0) {
             throw new IllegalArgumentException("Calories must be greater than zero");
         }
-        if (price < 0) {
-            throw new IllegalArgumentException("Price cannot be negative");
+        if (protein <= 0) {
+            throw new IllegalArgumentException("Protein must be greater than zero");
+        }
+        if (carbohydrates <= 0) {
+            throw new IllegalArgumentException("Carbohydrates must be greater than zero");
+        }
+        if (fats <= 0) {
+            throw new IllegalArgumentException("Fats must be greater than zero");
+        }
+        if (price <= 0) {
+            throw new IllegalArgumentException("Price must be greater than zero");
         }
         if (img == null || img.isBlank()) {
-            throw new IllegalArgumentException("Image URL cannot be null or empty");
+            throw new IllegalArgumentException("Image cannot be null or empty");
+        }
+        if (categoryID == null || categoryID.isBlank()) {
+            throw new IllegalArgumentException("Category ID cannot be null or empty");
+        }
+        if (typeID == null || typeID.isBlank()) {
+            throw new IllegalArgumentException("Type ID cannot be null or empty");
         }
     }
 }
