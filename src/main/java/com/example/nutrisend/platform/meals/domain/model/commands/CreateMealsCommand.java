@@ -1,15 +1,15 @@
 package com.example.nutrisend.platform.meals.domain.model.commands;
 
 public record CreateMealsCommand(
+        String categoryID,  // Nuevo campo
+        String typeID,
         String name,
         double calories,
         double protein,
         double carbohydrates,
         double fats,
         double price,
-        String img,
-        String categoryID,  // Nuevo campo
-        String typeID
+        String img
 ) {
     public CreateMealsCommand {
         if (name == null || name.isBlank()) {
