@@ -30,11 +30,23 @@ public class Meals {
     @Column(nullable = false)
     private String img;
 
+    @ManyToOne
+    @JoinColumn(name = "categoryID", nullable = false)
+    private CategoryMeals category;
+
+    @ManyToOne
+    @JoinColumn(name = "typeID", nullable = false)
+    private TypeMeals type;
+
+
     public Meals() {}
 
-    public Meals(String name, Double calories, Double protein,
+    public Meals( TypeMeals type, CategoryMeals category,
+                  String name, Double calories, Double protein,
                  Double carbohydrates, Double fats, Double price,
                  String img) {
+        this.type = type;
+        this.category = category;
         this.name = name;
         this.calories = calories;
         this.protein = protein;
@@ -52,32 +64,31 @@ public class Meals {
         this.id = id;
     }
 
-    public String getName() { return name; }
+    public CategoryMeals getCategory() { return category; }
+    public void setCategory(CategoryMeals category) { this.category = category; }
 
+    public TypeMeals getType() { return type; }
+    public void setType(TypeMeals type) { this.type = type; }
+
+    public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
     public Double getCalories() { return calories; }
-
     public void setCalories(Double calories) { this.calories = calories; }
 
     public Double getProtein() { return protein; }
-
     public void setProtein(Double protein) { this.protein = protein; }
 
     public Double getCarbohydrates() { return carbohydrates; }
-
     public void setCarbohydrates(Double carbohydrates) { this.carbohydrates = carbohydrates; }
 
     public Double getFats() { return fats; }
-
     public void setFats(Double fats) { this.fats = fats; }
 
     public Double getPrice() { return price; }
-
     public void setPrice(Double price) { this.price = price; }
 
     public String getImg() { return img; }
-
     public void setImg(String img) { this.img = img; }
 
 }
