@@ -14,16 +14,11 @@ public class TypeMeals {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "typeID")
-    private List<Meals> meals;
-
 
     public TypeMeals() {}
 
-    public TypeMeals(String name, List<Meals> meals) {
+    public TypeMeals(String name) {
         this.name = name;
-        this.meals = meals;
     }
 
     public Long getId() {
@@ -37,9 +32,5 @@ public class TypeMeals {
     public String getName() { return name; }
 
     public void setName(String name) { this.name = name; }
-
-    public List<Meals> getMeals() { return meals; }
-
-    public void setMeals(List<Meals> meals) { this.meals = meals; }
 
 }

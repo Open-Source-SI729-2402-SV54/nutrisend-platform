@@ -32,12 +32,7 @@ public class TypeMealsCommandServiceImpl implements TypeMealsCommandService {
 
         String typeID = UUID.randomUUID().toString();
 
-        List<Meals> meals = command.meals().stream()
-                .map(mealCommand -> mealsCommandService.handle(mealCommand).orElseThrow(
-                        () -> new IllegalArgumentException("Failed to create meal for command: " + mealCommand)))
-                .collect(Collectors.toList());
-
-        TypeMeals typeMeals = new TypeMeals(command.name(), meals);
+        TypeMeals typeMeals = new TypeMeals(command.name());
 
         typeMealsRepository.save(typeMeals);
 

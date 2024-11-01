@@ -8,10 +8,6 @@ import java.util.List;
 
 public class CreateTypeMealCommandFromResourceAssembler {
     public static CreateTypeMealsCommand toCommandFromResource(CreateTypeMealResource resource) {
-        List<CreateMealsCommand> meals = resource.meal()
-                .map(meal -> List.of(CreateMealCommandFromResourceAssembler.toCommandFromResource(meal)))
-                .orElse(List.of());
-
-        return new CreateTypeMealsCommand(resource.name(), meals);
+        return new CreateTypeMealsCommand(resource.name());
     }
 }
