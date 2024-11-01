@@ -5,8 +5,7 @@ import com.example.nutrisend.platform.user.domain.model.aggregates.Users;
 
 import java.util.Map;
 
-public record CreateScheduleCommand(Users userId, Map<String,
-        Map<String, Long>> days){
+public record CreateScheduleCommand(Long userId, Map<String, Map<String, Long>> days){
 
     public CreateScheduleCommand {
         if (userId == null) {
