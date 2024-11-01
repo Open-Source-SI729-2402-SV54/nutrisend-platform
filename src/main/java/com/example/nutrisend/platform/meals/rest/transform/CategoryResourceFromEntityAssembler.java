@@ -10,20 +10,7 @@ public class CategoryResourceFromEntityAssembler {
     public static CategoryMealResource toResourceFromEntity(CategoryMeals category) {
         return new CategoryMealResource(
                 category.getId().toString(),
-                category.getName(),
-                category.getMeals().stream()
-                        .map(meal -> new CreateMealResource(
-                                meal.getType() != null ? meal.getType().toString() : "",
-                                meal.getCategory() != null ? meal.getCategory().toString() : "",
-                                meal.getName(),
-                                meal.getCalories(),
-                                meal.getProtein(),
-                                meal.getCarbohydrates(),
-                                meal.getFats(),
-                                meal.getPrice(),
-                                meal.getImg() != null ? meal.getImg() : ""
-                        ))
-                        .collect(Collectors.toList())
+                category.getName()
         );
     }
 }

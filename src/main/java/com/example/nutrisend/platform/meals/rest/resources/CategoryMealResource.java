@@ -4,8 +4,7 @@ import java.util.List;
 
 public record CategoryMealResource(
         String id,
-        String name,
-        List<CreateMealResource> meal
+        String name
 ) {
 
 }

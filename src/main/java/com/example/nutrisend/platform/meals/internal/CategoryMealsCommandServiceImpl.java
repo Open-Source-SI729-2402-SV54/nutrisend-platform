@@ -34,12 +34,7 @@ public class CategoryMealsCommandServiceImpl implements CategoryMealsCommandServ
 
         String categoryID = UUID.randomUUID().toString();
 
-        List<Meals> meals = command.meals().stream()
-                .map(mealCommand -> mealsCommandService.handle(mealCommand).orElseThrow(
-                        () -> new IllegalArgumentException("Failed to create meal for command: " + mealCommand)))
-                .collect(Collectors.toList());
-
-        CategoryMeals categoryMeals = new CategoryMeals(command.name(), meals);
+        CategoryMeals categoryMeals = new CategoryMeals(command.name());
 
         categoryMealsRepository.save(categoryMeals);
 

@@ -4,7 +4,6 @@ import java.util.Optional;
 
 public record CreateCategoryMealResource(
         String id,
-        String name,
-        Optional<CreateMealResource> meal
+        String name
 ) {
 }
