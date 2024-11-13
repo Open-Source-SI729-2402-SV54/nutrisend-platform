@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,16 +50,19 @@ public class TypeMealController {
     }
 
     // Get /api/v1/type-meals/{id}
+    @GetMapping("/{id}")
     @Operation(summary = "Get type meal by ID", description = "Retrieve a specific type meal by its unique ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Type meal retrieved successfully"),
+            @ApiResponse(responseCode = "200", description = "Type meal found"),
             @ApiResponse(responseCode = "404", description = "Type meal not found")
     })
-    @GetMapping("/{id}")
     public ResponseEntity<TypeMealResource> getTypeMealById(@PathVariable Long id) {
-        Optional<TypeMeals> typeItem = typeMealsQueryService.handle(new GetTypeMealsByIdQuery(id));
-        return typeItem.map(type -> ResponseEntity.ok(TypeResourceFromEntityAssembler.toResourceFromEntity(type)))
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        var getTypeMealByIdQuery = new GetTypeMealsByIdQuery(id);
+        var typeMeal = typeMealsQueryService.handle(getTypeMealByIdQuery);
+        if (typeMeal.isEmpty()) return ResponseEntity.notFound().build();
+        var typeMealEntity = typeMeal.get();
+        var typeMealResource = TypeResourceFromEntityAssembler.toResourceFromEntity(typeMealEntity);
+        return ResponseEntity.ok(typeMealResource);
     }
 
     @Operation(summary = "Create a type meal", description = "Create a new type meal with the provided details")
