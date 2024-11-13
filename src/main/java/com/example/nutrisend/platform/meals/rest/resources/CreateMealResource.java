@@ -3,8 +3,8 @@ package com.example.nutrisend.platform.meals.rest.resources;
 
 
 public record CreateMealResource(
-        String typeID,
-        String categoryID,
+        Long typeID,
+        Long categoryID,
         String name,
         double calories,
         double protein,

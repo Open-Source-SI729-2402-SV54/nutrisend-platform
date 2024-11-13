@@ -1,5 +1,7 @@
 package com.example.nutrisend.platform.meals.domain.model.aggregates;
 
+import com.example.nutrisend.platform.categorymeals.domain.model.aggregates.CategoryMeals;
+import com.example.nutrisend.platform.typemeals.domain.model.aggregates.TypeMeals;
 import jakarta.persistence.*;
 
 @Entity

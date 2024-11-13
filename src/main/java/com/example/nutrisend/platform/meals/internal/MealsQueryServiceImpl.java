@@ -2,9 +2,9 @@ package com.example.nutrisend.platform.meals.internal;
 
 import com.example.nutrisend.platform.meals.domain.model.aggregates.Meals;
 import com.example.nutrisend.platform.meals.domain.model.queries.GetAllMealsQuery;
-import com.example.nutrisend.platform.meals.domain.model.queries.GetCategoryMealsByIdQuery;
+import com.example.nutrisend.platform.categorymeals.domain.model.queries.GetCategoryMealsByIdQuery;
 import com.example.nutrisend.platform.meals.domain.model.queries.GetMealsByIdQuery;
-import com.example.nutrisend.platform.meals.domain.model.queries.GetTypeMealsByIdQuery;
+import com.example.nutrisend.platform.typemeals.domain.model.queries.GetTypeMealsByIdQuery;
 import com.example.nutrisend.platform.meals.domain.services.MealsQueryService;
 import com.example.nutrisend.platform.meals.jpa.MealRepository;
 import org.springframework.beans.factory.annotation.Autowired;

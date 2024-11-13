@@ -1,13 +1,17 @@
 package com.example.nutrisend.platform.meals.internal;
 
-import com.example.nutrisend.platform.meals.domain.model.aggregates.CategoryMeals;
+import com.example.nutrisend.platform.categorymeals.domain.model.aggregates.CategoryMeals;
 import com.example.nutrisend.platform.meals.domain.model.aggregates.Meals;
-import com.example.nutrisend.platform.meals.domain.model.aggregates.TypeMeals;
-import com.example.nutrisend.platform.meals.domain.model.commands.*;
+import com.example.nutrisend.platform.typemeals.domain.model.aggregates.TypeMeals;
+import com.example.nutrisend.platform.categorymeals.domain.model.commands.CreateCategoryMealsCommand;
+import com.example.nutrisend.platform.meals.domain.model.commands.CreateMealsCommand;
+import com.example.nutrisend.platform.meals.domain.model.commands.DeleteMealsCommand;
+import com.example.nutrisend.platform.meals.domain.model.commands.UpdateMealsCommand;
+import com.example.nutrisend.platform.typemeals.domain.model.commands.CreateTypeMealsCommand;
 import com.example.nutrisend.platform.meals.domain.services.MealsCommandService;
-import com.example.nutrisend.platform.meals.jpa.CategoryMealsRepository;
+import com.example.nutrisend.platform.categorymeals.jpa.CategoryMealsRepository;
 import com.example.nutrisend.platform.meals.jpa.MealRepository;
-import com.example.nutrisend.platform.meals.jpa.TypeMealsRepository;
+import com.example.nutrisend.platform.typemeals.jpa.TypeMealsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

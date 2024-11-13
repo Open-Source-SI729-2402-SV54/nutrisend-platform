@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface MealRepository extends JpaRepository<Meals, String> {
+public interface MealRepository extends JpaRepository<Meals, Long> {
 }
