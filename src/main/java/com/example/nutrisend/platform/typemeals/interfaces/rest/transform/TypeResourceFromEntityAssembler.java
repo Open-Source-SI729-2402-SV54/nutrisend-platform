@@ -4,10 +4,10 @@ import com.example.nutrisend.platform.typemeals.domain.model.aggregates.TypeMeal
 import com.example.nutrisend.platform.typemeals.interfaces.rest.resources.TypeMealResource;
 
 public class TypeResourceFromEntityAssembler {
-    public static TypeMealResource toResourceFromEntity(TypeMeals type) {
+    public static TypeMealResource toResourceFromEntity(TypeMeals entity) {
         return new TypeMealResource(
-                type.getId(),
-                type.getName()
+                entity.getId(),
+                entity.getName()
         );
     }
 }

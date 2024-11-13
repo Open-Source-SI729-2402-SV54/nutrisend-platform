@@ -21,10 +21,11 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping(value = "/api/v1/type-meals", produces = "application/json")
-@Tag(name = "Type Meals", description = "Operations related to type meals")
+@RequestMapping(value = "/api/v1/type-meals", produces = APPLICATION_JSON_VALUE)
+@Tag(name = "Type Meals", description = "Available Type Meals Endpoints")
 public class TypeMealController {
 
     private final TypeMealsQueryService typeMealsQueryService;
@@ -50,8 +51,8 @@ public class TypeMealController {
 
     // Get /api/v1/type-meals/{id}
     @GetMapping("/{id}")
-    @Operation(summary = "Get type meal by ID", description = "Retrieve a specific type meal by its unique ID")
-    @ApiResponses(value = {
+    @Operation(summary = "Get Type Meal by id", description = "Get type of meal by id")
+    @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Type meal found"),
             @ApiResponse(responseCode = "404", description = "Type meal not found")
     })
