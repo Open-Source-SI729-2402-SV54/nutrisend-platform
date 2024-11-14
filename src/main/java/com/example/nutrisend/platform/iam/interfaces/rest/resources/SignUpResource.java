@@ -1,4 +1,6 @@
 package com.example.nutrisend.platform.iam.interfaces.rest.resources;
 
-public record SignUpResource() {
+import java.util.List;
+
+public record SignUpResource(String email, String password, List<String> roles) {
 }
