@@ -1,9 +1,9 @@
 package com.example.nutrisend.platform.meals.domain.model.queries;
 
-public record GetMealsByIdQuery(String id) {
+public record GetMealsByIdQuery(Long id) {
     public GetMealsByIdQuery {
-        if (id == null || id.isBlank()) {
-            throw new IllegalArgumentException("ID cannot be null or empty");
+        if (id == null || id <= 0) {
+            throw new IllegalArgumentException("ID cannot be null or zero");
         }
     }
 }

@@ -8,7 +8,7 @@ import com.example.nutrisend.platform.categorymeals.domain.model.commands.Update
 import java.util.Optional;
 
 public interface CategoryMealsCommandService {
-    Optional<CategoryMeals> handle(CreateCategoryMealsCommand command);
+    Long handle(CreateCategoryMealsCommand command);
     void handle(DeleteCategoryMealsCommand command);
     Optional<CategoryMeals> handle(UpdateCategoryMealsCommand command);
 }

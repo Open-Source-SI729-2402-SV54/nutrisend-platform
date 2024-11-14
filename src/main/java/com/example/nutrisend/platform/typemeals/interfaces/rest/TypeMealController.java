@@ -1,26 +1,23 @@
 package com.example.nutrisend.platform.typemeals.interfaces.rest;
 
-import com.example.nutrisend.platform.typemeals.domain.model.aggregates.TypeMeals;
-import com.example.nutrisend.platform.typemeals.domain.model.commands.CreateTypeMealsCommand;
 import com.example.nutrisend.platform.typemeals.domain.model.queries.GetAllTypeMealsQuery;
 import com.example.nutrisend.platform.typemeals.domain.model.queries.GetTypeMealsByIdQuery;
 import com.example.nutrisend.platform.typemeals.domain.services.TypeMealsCommandService;
 import com.example.nutrisend.platform.typemeals.domain.services.TypeMealsQueryService;
 import com.example.nutrisend.platform.typemeals.interfaces.rest.resources.CreateTypeMealResource;
 import com.example.nutrisend.platform.typemeals.interfaces.rest.resources.TypeMealResource;
-import com.example.nutrisend.platform.typemeals.interfaces.rest.transform.CreateTypeMealCommandFromResourceAssembler;
+import com.example.nutrisend.platform.typemeals.interfaces.rest.transform.CreateTypeMealResourceFromResourceAssembler;
 import com.example.nutrisend.platform.typemeals.interfaces.rest.transform.TypeResourceFromEntityAssembler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
-import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
@@ -36,14 +33,17 @@ public class TypeMealController {
         this.typeMealsCommandService = typeMealsCommandService;
     }
 
-
     // Get /api/v1/type-meals
-    @Operation(summary = "Get all types", description = "Retrieve all meal types")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Types retrieved successfully")})
     @GetMapping
+    @Operation(summary = "Get all types", description = "Get all meal types")
+    @ApiResponses( value =  {
+            @ApiResponse(responseCode = "200", description = "Type meals found"),
+            @ApiResponse(responseCode = "404", description = "Type meals not found")
+    })
     public ResponseEntity<List<TypeMealResource>> getAllTypes() {
-        List<TypeMeals> types = typeMealsQueryService.handle(new GetAllTypeMealsQuery());
-        List<TypeMealResource> typeResources = types.stream()
+        var type = typeMealsQueryService.handle(new GetAllTypeMealsQuery());
+        if (type.isEmpty()) return ResponseEntity.notFound().build();
+        var typeResources = type.stream()
                 .map(TypeResourceFromEntityAssembler::toResourceFromEntity)
                 .toList();
         return ResponseEntity.ok(typeResources);
@@ -56,7 +56,7 @@ public class TypeMealController {
             @ApiResponse(responseCode = "200", description = "Type meal found"),
             @ApiResponse(responseCode = "404", description = "Type meal not found")
     })
-    public ResponseEntity<TypeMealResource> getTypeMealById(@PathVariable Long id) {
+    public ResponseEntity<TypeMealResource> getTypeMealById(@PathVariable("id") Long id) {
         var getTypeMealByIdQuery = new GetTypeMealsByIdQuery(id);
         var typeMeal = typeMealsQueryService.handle(getTypeMealByIdQuery);
         if (typeMeal.isEmpty()) return ResponseEntity.notFound().build();
@@ -64,7 +64,6 @@ public class TypeMealController {
         var typeMealResource = TypeResourceFromEntityAssembler.toResourceFromEntity(typeMealEntity);
         return ResponseEntity.ok(typeMealResource);
     }
-
     @Operation(summary = "Create a type meal", description = "Create a new type meal with the provided details")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Type meal created"),
@@ -72,10 +71,15 @@ public class TypeMealController {
     })
     @PostMapping
     public ResponseEntity<TypeMealResource> createTypeMeal(@RequestBody CreateTypeMealResource resource) {
-        CreateTypeMealsCommand command = CreateTypeMealCommandFromResourceAssembler.toCommandFromResource(resource);
-        Optional<TypeMeals> typeMealItem = typeMealsCommandService.handle(command);
-        return typeMealItem.map(typeMeal -> new ResponseEntity<>(TypeResourceFromEntityAssembler.toResourceFromEntity(typeMeal), CREATED))
-                .orElseGet(() -> ResponseEntity.badRequest().build());
+        var createTypeCommand = CreateTypeMealResourceFromResourceAssembler.toCommandFromResource(resource);
+        var typeId = typeMealsCommandService.handle(createTypeCommand);
+        if (typeId == null || typeId == 0L) return ResponseEntity.badRequest().build();
+        var getTypeByIdQuery = new GetTypeMealsByIdQuery(typeId);
+        var type = typeMealsQueryService.handle(getTypeByIdQuery);
+        if (type.isEmpty()) return ResponseEntity.notFound().build();
+        var typeEntity = type.get();
+        var typeResource = TypeResourceFromEntityAssembler.toResourceFromEntity(typeEntity);
+        return new ResponseEntity<>(typeResource, HttpStatus.CREATED);
     }
 
 }

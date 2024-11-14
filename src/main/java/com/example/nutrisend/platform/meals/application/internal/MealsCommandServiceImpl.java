@@ -22,41 +22,30 @@ import java.util.UUID;
 public class MealsCommandServiceImpl implements MealsCommandService {
 
     private final MealRepository mealsRepository;
-    private final TypeMealsRepository typeMealsRepository;
     private final CategoryMealsRepository categoryMealsRepository;
+    private final TypeMealsRepository typeMealsRepository;
 
     @Autowired
-    public MealsCommandServiceImpl(MealRepository mealsRepository, TypeMealsRepository typeMealsRepository, CategoryMealsRepository categoryMealsRepository) {
+    public MealsCommandServiceImpl(MealRepository mealsRepository, CategoryMealsRepository categoryMealsRepository, TypeMealsRepository typeMealsRepository) {
         this.mealsRepository = mealsRepository;
-        this.typeMealsRepository = typeMealsRepository;
         this.categoryMealsRepository = categoryMealsRepository;
+        this.typeMealsRepository = typeMealsRepository;
     }
 
     @Override
-    public Optional<Meals> handle(CreateMealsCommand command) {
-        String mealId = UUID.randomUUID().toString();
-
-        TypeMeals type = typeMealsRepository.findById(command.typeID())
-                .orElseThrow(() -> new IllegalArgumentException("TypeMeals not found for ID: " + command.typeID()));
-
-        CategoryMeals category = categoryMealsRepository.findById(command.categoryID())
-                .orElseThrow(() -> new IllegalArgumentException("CategoryMeals not found for ID: " + command.categoryID()));
-
-        Meals meal = new Meals(type, category, command.name(), command.calories(), command.protein(), command.carbohydrates(), command.fats(), command.price(), command.img() );
-        mealsRepository.save(meal);
-
-        return Optional.of(meal);
+    public Long handle(CreateMealsCommand command) {
+        if (mealsRepository.existsByName(command.name())) {
+            throw new IllegalArgumentException("Meal already exists with name: ".formatted(command.name()));
+        }
+        var meals = new Meals(command, categoryMealsRepository, typeMealsRepository);
+        try {
+            mealsRepository.save(meals);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Error saving meal: " + e.getMessage());
+        }
+        return meals.getId();
     }
 
-    @Override
-    public void handle(CreateCategoryMealsCommand command) {
-
-    }
-
-    @Override
-    public void handle(CreateTypeMealsCommand command) {
-
-    }
 
     @Override
     public void handle(DeleteMealsCommand command) {

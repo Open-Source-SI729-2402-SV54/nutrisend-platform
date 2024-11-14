@@ -1,7 +1,11 @@
 package com.example.nutrisend.platform.meals.domain.model.aggregates;
 
 import com.example.nutrisend.platform.categorymeals.domain.model.aggregates.CategoryMeals;
+import com.example.nutrisend.platform.categorymeals.infrastructure.persistence.jpa.repositories.CategoryMealsRepository;
+import com.example.nutrisend.platform.meals.domain.model.commands.CreateMealsCommand;
 import com.example.nutrisend.platform.typemeals.domain.model.aggregates.TypeMeals;
+import com.example.nutrisend.platform.typemeals.domain.model.commands.CreateTypeMealsCommand;
+import com.example.nutrisend.platform.typemeals.infrastructure.persistence.jpa.repositories.TypeMealsRepository;
 import jakarta.persistence.*;
 
 @Entity
@@ -32,23 +36,21 @@ public class Meals {
     @Column(nullable = false)
     private String img;
 
-    @ManyToOne
-    @JoinColumn(name = "categoryID", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", nullable = false)
     private CategoryMeals category;
 
-    @ManyToOne
-    @JoinColumn(name = "typeID", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "type_id", nullable = false)
     private TypeMeals type;
 
 
     public Meals() {}
 
-    public Meals( TypeMeals type, CategoryMeals category,
-                  String name, Double calories, Double protein,
-                 Double carbohydrates, Double fats, Double price,
-                 String img) {
-        this.type = type;
+    public Meals(CategoryMeals category, TypeMeals type, String name, Double calories,
+                 Double protein, Double carbohydrates, Double fats, Double price, String img) {
         this.category = category;
+        this.type = type;
         this.name = name;
         this.calories = calories;
         this.protein = protein;
@@ -56,6 +58,24 @@ public class Meals {
         this.fats = fats;
         this.price = price;
         this.img = img;
+    }
+
+
+    public Meals(CreateMealsCommand command, CategoryMealsRepository categoryMealsRepository, TypeMealsRepository typeMealsRepository) {
+        CategoryMeals category = categoryMealsRepository.findById(command.categoryID())
+                .orElseThrow(() -> new IllegalArgumentException("Category not found"));
+        TypeMeals type = typeMealsRepository.findById(command.typeID())
+                .orElseThrow(() -> new IllegalArgumentException("Type not found"));
+
+        this.category = category;
+        this.type = type;
+        this.name = command.name();
+        this.calories = command.calories();
+        this.protein = command.protein();
+        this.carbohydrates = command.carbohydrates();
+        this.fats = command.fats();
+        this.price = command.price();
+        this.img = command.img();
     }
 
     public Long getId() {

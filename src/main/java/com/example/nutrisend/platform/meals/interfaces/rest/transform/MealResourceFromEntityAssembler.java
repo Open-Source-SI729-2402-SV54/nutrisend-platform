@@ -6,9 +6,9 @@ import com.example.nutrisend.platform.meals.interfaces.rest.resources.MealResour
 public class MealResourceFromEntityAssembler {
     public static MealResource toResourceFromEntity(Meals meal) {
         return new MealResource(
+                meal.getId(),
                 meal.getCategory().getId(),
                 meal.getType().getId(),
-                meal.getId(),
                 meal.getName(),
                 meal.getCalories(),
                 meal.getProtein(),

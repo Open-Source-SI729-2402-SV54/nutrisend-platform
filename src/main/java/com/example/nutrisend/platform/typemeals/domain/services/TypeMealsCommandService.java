@@ -8,7 +8,7 @@ import com.example.nutrisend.platform.typemeals.domain.model.commands.UpdateType
 import java.util.Optional;
 
 public interface TypeMealsCommandService {
-    Optional<TypeMeals> handle(CreateTypeMealsCommand command);
+    Long handle(CreateTypeMealsCommand command);
     void handle(DeleteTypeMealsCommand command);
     Optional<TypeMeals> handle(UpdateTypeMealsCommand command);
 }

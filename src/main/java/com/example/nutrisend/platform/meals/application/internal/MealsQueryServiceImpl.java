@@ -41,6 +41,6 @@ public class MealsQueryServiceImpl implements MealsQueryService {
 
     @Override
     public Optional<Meals> handle(GetMealsByIdQuery query) {
-        return Optional.empty();
+        return mealRepository.findById(query.id());
     }
 }

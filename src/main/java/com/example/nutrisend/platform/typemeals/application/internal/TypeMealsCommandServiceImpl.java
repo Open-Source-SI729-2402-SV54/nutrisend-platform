@@ -17,24 +17,23 @@ import java.util.UUID;
 public class TypeMealsCommandServiceImpl implements TypeMealsCommandService {
 
     private final TypeMealsRepository typeMealsRepository;
-    private final MealsCommandServiceImpl mealsCommandService;
 
     @Autowired
-    public TypeMealsCommandServiceImpl(TypeMealsRepository typeMealsRepository, MealsCommandServiceImpl mealsCommandService) {
+    public TypeMealsCommandServiceImpl(TypeMealsRepository typeMealsRepository) {
         this.typeMealsRepository = typeMealsRepository;
-        this.mealsCommandService = mealsCommandService;
     }
 
     @Override
-    public Optional<TypeMeals> handle(CreateTypeMealsCommand command) {
-
-        String typeID = UUID.randomUUID().toString();
-
-        TypeMeals typeMeals = new TypeMeals(command.name());
-
-        typeMealsRepository.save(typeMeals);
-
-        return Optional.of(typeMeals);
+    public Long handle(CreateTypeMealsCommand command) {
+        if (typeMealsRepository.existsByName(command.name()))
+            throw new IllegalArgumentException("Type meals already exists".formatted(command.name()));
+        var type = new TypeMeals(command);
+        try {
+            typeMealsRepository.save(type);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Error saving type meal: %s".formatted(e.getMessage()));
+        }
+        return type.getId();
     }
 
     @Override

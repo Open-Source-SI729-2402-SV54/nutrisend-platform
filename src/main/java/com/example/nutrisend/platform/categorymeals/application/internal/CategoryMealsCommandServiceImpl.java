@@ -8,6 +8,7 @@ import com.example.nutrisend.platform.categorymeals.domain.services.CategoryMeal
 import com.example.nutrisend.platform.meals.application.internal.MealsCommandServiceImpl;
 import com.example.nutrisend.platform.categorymeals.infrastructure.persistence.jpa.repositories.CategoryMealsRepository;
 import com.example.nutrisend.platform.meals.infrastructure.persistence.jpa.repositories.MealRepository;
+import com.example.nutrisend.platform.typemeals.domain.model.aggregates.TypeMeals;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,25 +19,24 @@ import java.util.UUID;
 public class CategoryMealsCommandServiceImpl implements CategoryMealsCommandService {
 
     private final CategoryMealsRepository categoryMealsRepository;
-    private final MealsCommandServiceImpl mealsCommandService;
 
 
     @Autowired
-    public CategoryMealsCommandServiceImpl(CategoryMealsRepository categoryMealsRepository, MealRepository mealRepository, MealsCommandServiceImpl mealsCommandService) {
+    public CategoryMealsCommandServiceImpl(CategoryMealsRepository categoryMealsRepository) {
         this.categoryMealsRepository = categoryMealsRepository;
-        this.mealsCommandService = mealsCommandService;
     }
 
     @Override
-    public Optional<CategoryMeals> handle(CreateCategoryMealsCommand command) {
-
-        String categoryID = UUID.randomUUID().toString();
-
-        CategoryMeals categoryMeals = new CategoryMeals(command.name());
-
-        categoryMealsRepository.save(categoryMeals);
-
-        return Optional.of(categoryMeals);
+    public Long handle(CreateCategoryMealsCommand command) {
+        if (categoryMealsRepository.existsByName(command.name()))
+            throw new IllegalArgumentException("Type meals already exists".formatted(command.name()));
+        var category = new CategoryMeals(command);
+        try {
+            categoryMealsRepository.save(category);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Error saving category meal: %s".formatted(e.getMessage()));
+        }
+        return category.getId();
     }
 
     @Override

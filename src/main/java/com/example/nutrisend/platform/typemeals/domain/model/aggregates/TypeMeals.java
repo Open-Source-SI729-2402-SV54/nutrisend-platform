@@ -1,5 +1,6 @@
 package com.example.nutrisend.platform.typemeals.domain.model.aggregates;
 
+import com.example.nutrisend.platform.typemeals.domain.model.commands.CreateTypeMealsCommand;
 import jakarta.persistence.*;
 
 @Entity
@@ -17,6 +18,10 @@ public class TypeMeals {
 
     public TypeMeals(String name) {
         this.name = name;
+    }
+
+    public TypeMeals(CreateTypeMealsCommand command) {
+        this.name = command.name();
     }
 
     public Long getId() {

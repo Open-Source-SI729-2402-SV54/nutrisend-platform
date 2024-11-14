@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TypeMealsRepository extends JpaRepository<TypeMeals, Long> {
+
+    boolean existsByName(String name);
+
 }
