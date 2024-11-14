@@ -4,8 +4,8 @@ import com.example.nutrisend.platform.iam.domain.model.commands.SignUpCommand;
 import com.example.nutrisend.platform.iam.domain.model.entities.Role;
 import com.example.nutrisend.platform.iam.domain.model.queries.GetUserByEmailQuery;
 import com.example.nutrisend.platform.iam.domain.model.queries.GetUserByIdQuery;
-import com.example.nutrisend.platform.iam.domain.services.commandservices.UserCommandService;
-import com.example.nutrisend.platform.iam.domain.services.queryservices.UserQueryService;
+import com.example.nutrisend.platform.iam.domain.services.UserCommandService;
+import com.example.nutrisend.platform.iam.domain.services.UserQueryService;
 
 import org.apache.logging.log4j.util.Strings;
 

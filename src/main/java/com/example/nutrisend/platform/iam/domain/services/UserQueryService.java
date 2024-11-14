@@ -1,4 +1,4 @@
-package com.example.nutrisend.platform.iam.domain.services.queryservices;
+package com.example.nutrisend.platform.iam.domain.services;
 
 import com.example.nutrisend.platform.iam.domain.model.aggregates.User;
 import com.example.nutrisend.platform.iam.domain.model.queries.GetAllUsersQuery;

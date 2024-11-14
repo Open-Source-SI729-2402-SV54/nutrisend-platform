@@ -1,4 +1,4 @@
-package com.example.nutrisend.platform.iam.domain.services.queryservices;
+package com.example.nutrisend.platform.iam.domain.services;
 
 import com.example.nutrisend.platform.iam.domain.model.entities.Role;
 import com.example.nutrisend.platform.iam.domain.model.queries.GetAllRolesQuery;

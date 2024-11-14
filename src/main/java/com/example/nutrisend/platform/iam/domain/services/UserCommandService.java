@@ -1,4 +1,4 @@
-package com.example.nutrisend.platform.iam.domain.services.commandservices;
+package com.example.nutrisend.platform.iam.domain.services;
 
 import com.example.nutrisend.platform.iam.domain.model.aggregates.User;
 import com.example.nutrisend.platform.iam.domain.model.commands.SignInCommand;
