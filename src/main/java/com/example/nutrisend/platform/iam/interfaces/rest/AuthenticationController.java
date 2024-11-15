@@ -31,6 +31,7 @@ public class AuthenticationController {
     public AuthenticationController(UserCommandService userCommandService){
         this.userCommandService = userCommandService;
     }
+
     @PostMapping("/sign-in")
     @Operation(summary = "Sign-in", description = "Sign-in with the provided credentials.")
     @ApiResponses(value = {
