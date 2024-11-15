@@ -4,9 +4,9 @@ import com.example.nutrisend.platform.meals.domain.model.commands.CreateMealsCom
 
 import java.util.List;
 
-public record UpdateCategoryMealsCommand(String categoryId, String name, List<CreateMealsCommand> meals) {
+public record UpdateCategoryMealsCommand(Long id, String name) {
     public UpdateCategoryMealsCommand {
-        if (categoryId == null || categoryId.isBlank()) {
+        if (id == null || id <= 0) {
             throw new IllegalArgumentException("Category ID cannot be null or empty");
         }
         if (name == null || name.isBlank()) {

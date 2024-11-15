@@ -1,13 +1,16 @@
 package com.example.nutrisend.platform.categorymeals.interfaces.rest;
 
+import com.example.nutrisend.platform.categorymeals.domain.model.commands.DeleteCategoryMealsCommand;
 import com.example.nutrisend.platform.categorymeals.domain.model.queries.GetAllCategoryMealsQuery;
 import com.example.nutrisend.platform.categorymeals.domain.model.queries.GetCategoryMealsByIdQuery;
 import com.example.nutrisend.platform.categorymeals.domain.services.CategoryMealsCommandService;
 import com.example.nutrisend.platform.categorymeals.domain.services.CategoryMealsQueryService;
 import com.example.nutrisend.platform.categorymeals.interfaces.rest.resources.CategoryMealResource;
 import com.example.nutrisend.platform.categorymeals.interfaces.rest.resources.CreateCategoryMealResource;
+import com.example.nutrisend.platform.categorymeals.interfaces.rest.resources.UpdateCategoryResource;
 import com.example.nutrisend.platform.categorymeals.interfaces.rest.transform.CategoryResourceFromEntityAssembler;
 import com.example.nutrisend.platform.categorymeals.interfaces.rest.transform.CreateCategoryResourceFromResourceAssembler;
+import com.example.nutrisend.platform.categorymeals.interfaces.rest.transform.UpdateCategoryCommandFromResourceAssembler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -80,5 +83,33 @@ public class CategoryMealController {
         var categoryEntity = category.get();
         var categoryResource = CategoryResourceFromEntityAssembler.toResourceFromEntity(categoryEntity);
         return new ResponseEntity<>(categoryResource, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    @Operation(summary = "Update category meal", description = "Update category meal")
+    @ApiResponses( value =  {
+            @ApiResponse(responseCode = "200", description = "Category meal updated"),
+            @ApiResponse(responseCode = "404", description = "Category meal not found")
+    })
+    public ResponseEntity<CategoryMealResource> updateCategoryMeal(@PathVariable("id") Long id,
+                                                                   @RequestBody UpdateCategoryResource resource) {
+        var updateCategoryCommand = UpdateCategoryCommandFromResourceAssembler.toCommandFromResource(id, resource);
+        var updatedCategory = categoryMealsCommandService.handle(updateCategoryCommand);
+        if (updatedCategory.isEmpty()) return ResponseEntity.notFound().build();
+        var updatedCategoryEntity = updatedCategory.get();
+        var updatedCategoryResource = CategoryResourceFromEntityAssembler.toResourceFromEntity(updatedCategoryEntity);
+        return ResponseEntity.ok(updatedCategoryResource);
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Delete category meal", description = "Delete category meal")
+    @ApiResponses( value =  {
+            @ApiResponse(responseCode = "200", description = "Category meal deleted"),
+            @ApiResponse(responseCode = "404", description = "Category meal not found")
+    })
+    public ResponseEntity<?> deleteCategoryMeal(@PathVariable("id") Long id) {
+        var deleteCategoryCommand = new DeleteCategoryMealsCommand(id);
+        categoryMealsCommandService.handle(deleteCategoryCommand);
+        return ResponseEntity.ok("Deleted course");
     }
 }

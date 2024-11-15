@@ -41,11 +41,29 @@ public class CategoryMealsCommandServiceImpl implements CategoryMealsCommandServ
 
     @Override
     public void handle(DeleteCategoryMealsCommand command) {
-
+        if (!categoryMealsRepository.existsById(command.id())) {
+            throw new IllegalArgumentException("Type meals does not exists".formatted(command.id()));
+        }
+        try {
+            categoryMealsRepository.deleteById(command.id());
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Error while deleting category meal: %s".formatted(e.getMessage()));
+        }
     }
 
     @Override
     public Optional<CategoryMeals> handle(UpdateCategoryMealsCommand command) {
-        return Optional.empty();
+        if (categoryMealsRepository.existsByNameAndIdIsNot(command.name(), command.id()))
+            throw new IllegalArgumentException("Type meals already exists".formatted(command.name()));
+        var result = categoryMealsRepository.findById(command.id());
+        if (result.isEmpty())
+            throw new IllegalArgumentException("Type meals does not exists".formatted(command.id()));
+        var categoryToUpdate = result.get();
+        try {
+            var updatedCategory = categoryMealsRepository.save(categoryToUpdate.updateCategory(command.name()));
+            return Optional.of(updatedCategory);
+        } catch (Exception e){
+            throw new IllegalArgumentException("Error while updating category meal: %s".formatted(e.getMessage()));
+        }
     }
 }
