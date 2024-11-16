@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 
 public record UpdateScheduleCommand(
         Long scheduleId,
-        Map<String, CreateDailyMealCommand> weeklyMeals
+        Map<Long, CreateDailyMealCommand> weeklyMeals
 ) {
     public Set<Long> getAllMealIds(){
         return weeklyMeals.values().stream()
