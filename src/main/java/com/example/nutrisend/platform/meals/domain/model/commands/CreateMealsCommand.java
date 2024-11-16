@@ -1,8 +1,8 @@
 package com.example.nutrisend.platform.meals.domain.model.commands;
 
 public record CreateMealsCommand(
-        String categoryID,  // Nuevo campo
-        String typeID,
+        Long categoryID,  // Nuevo campo
+        Long typeID,
         String name,
         double calories,
         double protein,
@@ -33,11 +33,11 @@ public record CreateMealsCommand(
         if (img == null || img.isBlank()) {
             throw new IllegalArgumentException("Image cannot be null or empty");
         }
-        if (categoryID == null || categoryID.isBlank()) {
-            throw new IllegalArgumentException("Category ID cannot be null or empty");
+        if (categoryID == null || categoryID <= 0) {
+            throw new IllegalArgumentException("Category ID cannot be null or must be greater than zero");
         }
-        if (typeID == null || typeID.isBlank()) {
-            throw new IllegalArgumentException("Type ID cannot be null or empty");
+        if (typeID == null || typeID <= 0) {
+            throw new IllegalArgumentException("Type ID cannot be null or must be greater than zero");
         }
     }
 }
