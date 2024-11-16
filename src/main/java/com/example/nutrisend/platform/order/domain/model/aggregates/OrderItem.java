@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // O String, dependiendo de cómo estés manejando los IDs
+    private Long id;
 
     @Column(nullable = false)
     private String name;
@@ -21,7 +21,6 @@ public class OrderItem {
     private int quantity;
 
     public OrderItem() {
-        // Constructor vacío requerido por JPA
     }
 
     public OrderItem(String name, double price, String category, int quantity) {
@@ -31,7 +30,6 @@ public class OrderItem {
         this.quantity = quantity;
     }
 
-    // Getters y setters
     public Long getId() {
         return id;
     }
