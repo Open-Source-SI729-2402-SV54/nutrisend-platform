@@ -1,4 +1,4 @@
-package com.example.nutrisend.platform.schedule.internal;
+package com.example.nutrisend.platform.schedule.application.internal;
 
 
 import com.example.nutrisend.platform.iam.infrastructure.persistence.jpa.repositories.UserRepository;
