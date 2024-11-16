@@ -1,8 +1,7 @@
-package com.example.nutrisend.platform.order.rest.transform;
+package com.example.nutrisend.platform.order.interfaces.rest.transform;
 
 import com.example.nutrisend.platform.order.domain.model.aggregates.Order;
-import com.example.nutrisend.platform.order.rest.resources.OrderItemResource;
-import com.example.nutrisend.platform.order.rest.resources.OrderResource;
+import com.example.nutrisend.platform.order.interfaces.rest.resources.OrderResource;
 
 public class OrderResourceFromEntityAssembler {
     public static OrderResource toResourceFromEntity(Order order) {
@@ -10,7 +9,7 @@ public class OrderResourceFromEntityAssembler {
                 order.getId(),
                 order.getUserId(),
                 order.getItems().stream()
-                        .map(item -> new OrderItemResource(
+                        .map(item -> new com.example.nutrisend.platform.order.rest.resources.OrderItemResource(
                                 item.getName(),
                                 item.getPrice(),
                                 item.getCategory(),

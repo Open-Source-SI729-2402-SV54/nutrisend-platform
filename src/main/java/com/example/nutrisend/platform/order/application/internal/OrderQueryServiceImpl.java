@@ -1,8 +1,8 @@
-package com.example.nutrisend.platform.order.internal;
+package com.example.nutrisend.platform.order.application.internal;
 import com.example.nutrisend.platform.order.domain.model.aggregates.Order;
 import com.example.nutrisend.platform.order.domain.model.queries.GetOrdersByIdQuery;
 import com.example.nutrisend.platform.order.domain.services.OrderQueryService;
-import com.example.nutrisend.platform.order.jpa.OrderRepository;
+import com.example.nutrisend.platform.order.infrastructure.persistence.jpa.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,13 +21,11 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 
     @Override
     public Optional<Order> handle(GetOrdersByIdQuery query) {
-        // Lógica para buscar un pedido por ID en la base de datos
         return orderRepository.findById(query.id());
     }
 
     @Override
     public List<Order> getAllOrders() {
-        // Lógica para obtener todos los pedidos de la base de datos
         return orderRepository.findAll();
     }
 }

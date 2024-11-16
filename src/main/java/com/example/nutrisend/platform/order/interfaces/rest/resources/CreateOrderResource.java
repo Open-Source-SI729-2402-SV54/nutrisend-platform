@@ -1,4 +1,4 @@
-package com.example.nutrisend.platform.order.rest.resources;
+package com.example.nutrisend.platform.order.interfaces.rest.resources;
 
 import java.util.List;
 
