@@ -5,6 +5,6 @@ import java.util.Map;
 public record ScheduleResource(
         Long scheduleId,
         Long userId,
-        Map<String, DailyMealResource> weeklyMeals
+        Map<Long, DailyMealResource> weeklyMeals
 ) {
 }

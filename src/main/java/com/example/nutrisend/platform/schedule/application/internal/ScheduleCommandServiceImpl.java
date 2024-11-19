@@ -58,7 +58,7 @@ public class ScheduleCommandServiceImpl  implements ScheduleCommandService {
                 .stream()
                 .collect(Collectors.toMap(Meals::getId, meals -> meals));
         command.weeklyMeals().forEach((day, dailyMealCommand) -> {
-            schedule.getWeeklyMeals().put(String.valueOf(day), new DailyMeals(
+            schedule.getWeeklyMeals().put(day, new DailyMeals(
                     mealsMap.get(dailyMealCommand.breakfastId()),
                     mealsMap.get(dailyMealCommand.lunchId()),
                     mealsMap.get(dailyMealCommand.dinnerId())
