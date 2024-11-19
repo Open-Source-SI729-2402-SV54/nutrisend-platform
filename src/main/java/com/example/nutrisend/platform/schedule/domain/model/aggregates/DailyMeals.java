@@ -13,16 +13,17 @@ import lombok.Setter;
 public class DailyMeals {
 
     @ManyToOne
-    @JoinColumn(name = "breakfast_id")
+    @JoinColumn(name = "breakfast_id", nullable = false)
     private Meals breakfast;
 
     @ManyToOne
-    @JoinColumn(name = "lunch_id")
+    @JoinColumn(name = "lunch_id", nullable = false)
     private Meals lunch;
 
     @ManyToOne
-    @JoinColumn(name = "dinner_id")
+    @JoinColumn(name = "dinner_id", nullable = false)
     private Meals dinner;
+
 
     public DailyMeals(){}
 
