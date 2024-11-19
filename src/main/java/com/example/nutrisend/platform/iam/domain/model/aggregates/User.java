@@ -61,6 +61,7 @@ public class User extends AuditableAbstractAggregateRoot<User> {
         this.surname = surname;
         this.email = email;
         this.password = password;
+        this.phone = phone;
         this.roles = new HashSet<>();
     }
     public User(String email, String password){
@@ -86,14 +87,5 @@ public class User extends AuditableAbstractAggregateRoot<User> {
         return this;
     }
 
-    public static User fromSignUpCommand(SignUpCommand command) {
-        return new User(
-                command.name(),
-                command.surname(),
-                command.email(),
-                command.password(),
-                command.phone().toString(),
-                command.roles()
-        );
-    }
+
 }

@@ -4,7 +4,6 @@ import com.example.nutrisend.platform.categorymeals.domain.model.aggregates.Cate
 import com.example.nutrisend.platform.categorymeals.infrastructure.persistence.jpa.repositories.CategoryMealsRepository;
 import com.example.nutrisend.platform.meals.domain.model.commands.CreateMealsCommand;
 import com.example.nutrisend.platform.typemeals.domain.model.aggregates.TypeMeals;
-import com.example.nutrisend.platform.typemeals.domain.model.commands.CreateTypeMealsCommand;
 import com.example.nutrisend.platform.typemeals.infrastructure.persistence.jpa.repositories.TypeMealsRepository;
 import jakarta.persistence.*;
 

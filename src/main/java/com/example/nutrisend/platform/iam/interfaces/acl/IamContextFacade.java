@@ -26,7 +26,7 @@ public class IamContextFacade {
             String surname,
             String email,
             String password,
-            Number phone) {
+            String phone) {
         var signUpCommand = new SignUpCommand(name, surname, email,
                 password, phone, List.of(Role.getDefaultRole()));
         var result = userCommandService.handle(signUpCommand);

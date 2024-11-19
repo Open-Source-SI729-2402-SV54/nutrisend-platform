@@ -35,28 +35,32 @@ public class AuthenticationController {
     @PostMapping("/sign-in")
     @Operation(summary = "Sign-in", description = "Sign-in with the provided credentials.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "User authenticated successfully"),
-            @ApiResponse(responseCode = "404", description = "User not found")
-    })
-    public ResponseEntity<AuthenticatedUserResource> signIn(@RequestBody SignInResource signInResource){
+            @ApiResponse(responseCode = "200", description = "User authenticated successfully."),
+            @ApiResponse(responseCode = "404", description = "User not found.")})
+    public ResponseEntity<AuthenticatedUserResource> signIn(@RequestBody SignInResource signInResource) {
         var signInCommand = SignInCommandFromResourceAssembler.toCommandFromResource(signInResource);
         var authenticatedUser = userCommandService.handle(signInCommand);
-        var authenticatedUserResource = AuthenticatedUserResourceFromEntityAssembler
-                .toResourceFromEntity(authenticatedUser.get().getLeft(), authenticatedUser.get().getRight()) ;
+        if (authenticatedUser.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        var authenticatedUserResource = AuthenticatedUserResourceFromEntityAssembler.toResourceFromEntity(authenticatedUser.get().getLeft(), authenticatedUser.get().getRight());
         return ResponseEntity.ok(authenticatedUserResource);
     }
 
     @PostMapping("/sign-up")
     @Operation(summary = "Sign-up", description = "Sign-up with the provided credentials.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "User created successfully"),
-            @ApiResponse(responseCode = "404", description = "Bad request")
-    })
+            @ApiResponse(responseCode = "201", description = "User created successfully."),
+            @ApiResponse(responseCode = "400", description = "Bad request.")})
     public ResponseEntity<UserResource> signUp(@RequestBody SignUpResource signUpResource) {
         var signUpCommand = SignUpCommandFromResourceAssembler.toCommandFromResource(signUpResource);
         var user = userCommandService.handle(signUpCommand);
-        if (user.isEmpty()) return ResponseEntity.badRequest().build();
+        if (user.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
         var userResource = UserResourceFromEntityAssembler.toResourceFromEntity(user.get());
         return new ResponseEntity<>(userResource, HttpStatus.CREATED);
+
     }
+
 }

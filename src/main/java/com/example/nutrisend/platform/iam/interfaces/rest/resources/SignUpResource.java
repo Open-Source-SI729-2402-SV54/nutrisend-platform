@@ -6,6 +6,6 @@ public record SignUpResource(String name,
                              String surname,
                              String email,
                              String password,
-                             Number phone,
+                             String phone,
                              List<String> roles) {
 }

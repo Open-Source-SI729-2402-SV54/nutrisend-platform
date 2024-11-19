@@ -9,7 +9,7 @@ public record SignUpCommand(
         String surname,
         String email,
         String password,
-        Number phone,
+        String phone,
         List<Role> roles
 ) {
 }

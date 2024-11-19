@@ -38,7 +38,7 @@ public class UserCommandServiceImpl implements UserCommandService {
         ).toList();
         var user = new User(command.name(), command.surname(),
                 command.email(), hashingService.encode(command.password()),
-                command.name(), roles);
+                command.phone(), roles);
         userRepository.save(user);
         return userRepository.findByEmail(command.email());
     }
