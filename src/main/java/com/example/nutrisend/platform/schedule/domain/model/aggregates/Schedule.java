@@ -23,7 +23,7 @@ public class Schedule {
     private User user;
 
     @ElementCollection
-    private Map<String, DailyMeals> weeklyMeals = new HashMap<>();
+    private Map<Long, DailyMeals> weeklyMeals = new HashMap<>();
 
     public static Schedule fromCreateCommand(CreateScheduleCommand command, User user, Map<Long, Meals> mealsMap) {
         Schedule schedule = new Schedule();
