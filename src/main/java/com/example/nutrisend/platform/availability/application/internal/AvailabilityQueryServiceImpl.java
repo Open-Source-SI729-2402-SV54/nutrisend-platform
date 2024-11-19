@@ -5,10 +5,12 @@ import com.example.nutrisend.platform.availability.domain.model.queries.GetAllAv
 import com.example.nutrisend.platform.availability.domain.model.queries.GetAvailabilityByIdQuery;
 import com.example.nutrisend.platform.availability.domain.services.AvailabilityQueryService;
 import com.example.nutrisend.platform.availability.infrastructure.persistence.jpa.repositories.AvailabilityRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class AvailabilityQueryServiceImpl implements AvailabilityQueryService {
 
     private final AvailabilityRepository availabilityRepository;

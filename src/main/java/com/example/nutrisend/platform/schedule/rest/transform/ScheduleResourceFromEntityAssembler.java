@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class ScheduleResourceFromEntityAssembler {
     public static ScheduleResource toResource(Schedule schedule, Map<Long, MealResource> mealResourceMap) {
-        Map<String, DailyMealResource> weeklyMeals = schedule.getWeeklyMeals().entrySet()
+        Map<Long, DailyMealResource> weeklyMeals = schedule.getWeeklyMeals().entrySet()
                 .stream()
                 .collect(Collectors.toMap(
                         Map.Entry::getKey, // El día como clave (String)
