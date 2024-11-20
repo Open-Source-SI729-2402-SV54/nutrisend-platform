@@ -22,7 +22,7 @@ public class NutrisendPlatformApplication {
 				@Override
 				public void addCorsMappings(CorsRegistry registry) {
 					registry.addMapping("/**")
-							.allowedOrigins("http://localhost:4200")
+							.allowedOrigins("https://front-end-master-rouge.vercel.app")
 							.allowedMethods("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH")
 							.allowedHeaders("*")
 							.allowCredentials(true);}
