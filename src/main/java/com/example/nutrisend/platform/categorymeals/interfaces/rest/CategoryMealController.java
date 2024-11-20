@@ -21,8 +21,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @RestController
-@RequestMapping(value = "/api/v1/category", produces = "application/json")
+@RequestMapping(value = "/api/v1/category", produces = APPLICATION_JSON_VALUE)
 @Tag(name = "Category Meals", description = "Available Category Meals Endpoints")
 public class CategoryMealController {
     private final CategoryMealsQueryService categoryMealsQueryService;
