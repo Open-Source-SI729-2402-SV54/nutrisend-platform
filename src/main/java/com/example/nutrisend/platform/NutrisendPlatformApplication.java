@@ -22,7 +22,7 @@ public class NutrisendPlatformApplication {
 				@Override
 				public void addCorsMappings(CorsRegistry registry) {
 					registry.addMapping("/**")
-							.allowedOrigins("https://graceful-respect-production.up.railway.app")
+							.allowedOrigins("http://localhost:4200")
 							.allowedMethods("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH")
 							.allowedHeaders("*")
 							.allowCredentials(true);}
