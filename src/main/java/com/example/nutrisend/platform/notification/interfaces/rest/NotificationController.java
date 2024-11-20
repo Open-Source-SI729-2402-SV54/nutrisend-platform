@@ -103,21 +103,4 @@ public class NotificationController {
         var updatedNotificationResource = NotificationResourceFromEntityAssembler.toResourceFromEntity(updatedNotificationEntity);
         return ResponseEntity.ok(updatedNotificationResource);
     }
-
-    @GetMapping("/user/{userId}")
-    @Operation(summary = "Get notifications by userId", description = "Retrieve all notifications for a specific userId")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Notifications found"),
-            @ApiResponse(responseCode = "404", description = "No notifications found for the given userId")
-    })
-    public ResponseEntity<List<NotificationResource>> getNotificationsByUserId(@PathVariable("userId") Long userId) {
-        var getNotificationsByUserIdQuery = new GetNotificationsByUserIdQuery(userId);
-        var notifications = notificationQueryService.handle(getNotificationsByUserIdQuery);
-        if (notifications.isEmpty()) return ResponseEntity.notFound().build();
-        var notificationResources = notifications.stream()
-                .map(NotificationResourceFromEntityAssembler::toResourceFromEntity)
-                .toList();
-        return ResponseEntity.ok(notificationResources);
-    }
-
 }
