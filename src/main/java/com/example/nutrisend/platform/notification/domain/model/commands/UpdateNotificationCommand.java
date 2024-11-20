@@ -7,8 +7,8 @@ public record UpdateNotificationCommand(Long id,
                                         String email,
                                         String message,
                                         Long typeId,
-                                        boolean active,
-                                        LocalTime notificationTime) {
+                                        String active,
+                                        String timestamp) {
     public UpdateNotificationCommand {
         if (id == null || id <= 0) {
             throw new IllegalArgumentException("Notification ID cannot be null or empty");
@@ -25,7 +25,7 @@ public record UpdateNotificationCommand(Long id,
         if (typeId == null || typeId <= 0) {
             throw new IllegalArgumentException("Type ID cannot be null or less than or equal to zero.");
         }
-        if (notificationTime == null) {
+        if (timestamp == null || timestamp.isBlank()) {
             throw new IllegalArgumentException("Notification time cannot be null.");
         }
     }

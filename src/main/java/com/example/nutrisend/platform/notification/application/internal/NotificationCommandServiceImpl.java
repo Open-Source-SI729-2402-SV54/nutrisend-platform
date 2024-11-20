@@ -36,19 +36,13 @@ public class NotificationCommandServiceImpl implements NotificationCommandServic
 
     @Override
     public Long handle(CreateNotificationCommand command) {
-        Notification notification = new Notification(
-                command.userId(),
-                command.email(),
-                command.message(),
-                command.typeId(),
-                command.active(),
-                command.notificationTime()
-        );
-
-        Notification savedNotification = notificationRepository.save(notification);
-        scheduleNotificationEmail(savedNotification);
-
-        return savedNotification.getId();
+        var notification = new Notification(command);
+        try {
+            notificationRepository.save(notification);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Error saving category meal: %s".formatted(e.getMessage()));
+        }
+        return notification.getId();
     }
 
     @Override
@@ -70,31 +64,11 @@ public class NotificationCommandServiceImpl implements NotificationCommandServic
         if (result.isEmpty()) throw new IllegalArgumentException("Notification does not exist".formatted(command.id()));
         var notificationToUpdate = result.get();
         try {
-            var updatedNotification = notificationRepository.save(notificationToUpdate.updateNotification(command.userId(), command.email(), command.message(), command.typeId(), command.active(), command.notificationTime()));
+            var updatedNotification = notificationRepository.save(notificationToUpdate.updateNotification(command.userId(), command.email(), command.message(), command.typeId(), command.active(), command.timestamp()));
             return Optional.of(updatedNotification);
         } catch (Exception e){
             throw new IllegalArgumentException("Notification could not be updated");
         }
     }
 
-    private void scheduleNotificationEmail(Notification notification) {
-        LocalTime scheduledTime = notification.getNotificationTime();
-        Date executionTime = Date.from(
-                scheduledTime.atDate(java.time.LocalDate.now())
-                        .atZone(ZoneId.systemDefault())
-                        .toInstant()
-        );
-
-        taskScheduler.schedule(() -> {
-            try {
-                emailService.sendEmail(
-                        notification.getEmail(),
-                        "Notificación programada",
-                        notification.getMessage()
-                );
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }, executionTime);
-    }
 }

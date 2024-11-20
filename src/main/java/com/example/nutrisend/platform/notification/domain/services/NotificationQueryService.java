@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface NotificationQueryService {
-    Optional<Notification> handle(GetNotificationsByUserIdQuery query);
+    List<Notification> handle(GetNotificationsByUserIdQuery query);
     List<Notification> handle(GetAllNotificationsQuery query);
 
     Optional<Notification> handle(GetNotificationByIdQuery query);

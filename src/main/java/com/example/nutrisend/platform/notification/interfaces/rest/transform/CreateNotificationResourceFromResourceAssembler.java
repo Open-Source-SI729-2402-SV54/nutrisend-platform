@@ -14,7 +14,7 @@ public class CreateNotificationResourceFromResourceAssembler {
                 resource.message(),
                 resource.typeId(),
                 resource.active(),
-                resource.notificationTime()
+                resource.timestamp()
         );
     }
 }

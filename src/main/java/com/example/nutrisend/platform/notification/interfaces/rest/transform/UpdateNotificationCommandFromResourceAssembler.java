@@ -14,6 +14,6 @@ public class UpdateNotificationCommandFromResourceAssembler {
                 resource.message(),
                 resource.typeId(),
                 resource.active(),
-                resource.notificationTime());
+                resource.timestamp());
     }
 }

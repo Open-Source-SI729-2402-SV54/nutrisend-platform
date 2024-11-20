@@ -4,6 +4,7 @@ import com.example.nutrisend.platform.notification.domain.model.aggregates.Notif
 import com.example.nutrisend.platform.notification.domain.model.commands.CreateNotificationCommand;
 import com.example.nutrisend.platform.notification.domain.model.queries.GetAllNotificationsQuery;
 import com.example.nutrisend.platform.notification.domain.model.queries.GetNotificationByIdQuery;
+import com.example.nutrisend.platform.notification.domain.model.queries.GetNotificationsByUserIdQuery;
 import com.example.nutrisend.platform.notification.domain.services.NotificationCommandService;
 import com.example.nutrisend.platform.notification.domain.services.NotificationQueryService;
 import com.example.nutrisend.platform.notification.interfaces.rest.resources.CreateNotificationResource;
@@ -103,5 +104,20 @@ public class NotificationController {
         return ResponseEntity.ok(updatedNotificationResource);
     }
 
+    @GetMapping("/user/{userId}")
+    @Operation(summary = "Get notifications by userId", description = "Retrieve all notifications for a specific userId")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Notifications found"),
+            @ApiResponse(responseCode = "404", description = "No notifications found for the given userId")
+    })
+    public ResponseEntity<List<NotificationResource>> getNotificationsByUserId(@PathVariable("userId") Long userId) {
+        var getNotificationsByUserIdQuery = new GetNotificationsByUserIdQuery(userId);
+        var notifications = notificationQueryService.handle(getNotificationsByUserIdQuery);
+        if (notifications.isEmpty()) return ResponseEntity.notFound().build();
+        var notificationResources = notifications.stream()
+                .map(NotificationResourceFromEntityAssembler::toResourceFromEntity)
+                .toList();
+        return ResponseEntity.ok(notificationResources);
+    }
 
 }
