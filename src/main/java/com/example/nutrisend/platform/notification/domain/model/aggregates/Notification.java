@@ -24,20 +24,20 @@ public class Notification {
     private Long typeId;
 
     @Column(nullable = false)
-    private String active;
+    private boolean active;
 
     @Column(nullable = false)
-    private String timestamp;
+    private LocalTime notificationTime;
 
     public Notification() {}
 
-    public Notification(Long userId, String email, String message, Long typeId, String active, String timestamp) {
+    public Notification(Long userId, String email, String message, Long typeId, boolean active, LocalTime notificationTime) {
         this.userId = userId;
         this.email = email;
         this.message = message;
         this.typeId = typeId;
         this.active = active;
-        this.timestamp = timestamp;
+        this.notificationTime = notificationTime;
     }
 
 
@@ -47,16 +47,16 @@ public class Notification {
         this.message = command.message();
         this.typeId = command.typeId();
         this.active = command.active();
-        this.timestamp = command.timestamp();
+        this.notificationTime = command.notificationTime();
     }
 
-    public Notification updateNotification(Long userId, String email, String message, Long typeId, String active, String timestamp) {
+    public Notification updateNotification(Long userId, String email, String message, Long typeId, boolean active, LocalTime notificationTime) {
         this.userId = userId;
         this.email = email;
         this.message = message;
         this.typeId = typeId;
         this.active = active;
-        this.timestamp = timestamp;
+        this.notificationTime = notificationTime;
         return this;
     }
 
@@ -67,6 +67,7 @@ public class Notification {
     public Long getUserId() {
         return userId;
     }
+
     public String getEmail() {
         return email;
     }
@@ -74,20 +75,25 @@ public class Notification {
     public String getMessage() {
         return message;
     }
+
     public Long getTypeId() {
         return typeId;
     }
 
-    public String getActive() { return active;}
-    public void setActive(String active) {
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
         this.active = active;
     }
 
-    public String getTimestamp() {
-        return timestamp;
+    public LocalTime getNotificationTime() {
+        return notificationTime;
     }
-    public void setTimestamp(LocalTime notificationTime) {
-        this.timestamp = timestamp;
+
+    public void setNotificationTime(LocalTime notificationTime) {
+        this.notificationTime = notificationTime;
     }
 
 

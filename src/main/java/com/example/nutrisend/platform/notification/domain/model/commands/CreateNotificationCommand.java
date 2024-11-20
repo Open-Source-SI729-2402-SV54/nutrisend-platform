@@ -1,12 +1,14 @@
 package com.example.nutrisend.platform.notification.domain.model.commands;
 
+import java.time.LocalTime;
+
 public record CreateNotificationCommand(
         Long userId,
         String email,
         String message,
         Long typeId,
-        String active,
-        String timestamp
+        boolean active,
+        LocalTime notificationTime
 ) {
     public CreateNotificationCommand {
         if (userId == null || userId <= 0) {
@@ -21,7 +23,7 @@ public record CreateNotificationCommand(
         if (typeId == null || typeId <= 0) {
             throw new IllegalArgumentException("Type ID cannot be null or less than or equal to zero.");
         }
-        if (timestamp == null || timestamp.isBlank()) {
+        if (notificationTime == null) {
             throw new IllegalArgumentException("Notification time cannot be null.");
         }
     }

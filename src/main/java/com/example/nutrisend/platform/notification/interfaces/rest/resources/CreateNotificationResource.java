@@ -7,7 +7,7 @@ public record CreateNotificationResource(
         String email,
         String message,
         Long typeId,
-        String active,
-        String timestamp
+        boolean active,
+        LocalTime notificationTime
 ) {
 }

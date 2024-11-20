@@ -8,6 +8,6 @@ public record NotificationResource(
         String email,
         String message,
         Long typeId,
-        String active,
-        String timestamp
+        boolean active,
+        LocalTime notificationTime
 ) {}

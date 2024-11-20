@@ -12,8 +12,8 @@ public class NotificationResourceFromEntityAssembler {
                 notification.getEmail(),
                 notification.getMessage(),
                 notification.getTypeId(),
-                notification.getActive(),
-                notification.getTimestamp()
+                notification.isActive(),
+                notification.getNotificationTime()
         );
     }
 }

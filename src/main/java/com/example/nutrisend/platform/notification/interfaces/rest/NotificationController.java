@@ -4,7 +4,6 @@ import com.example.nutrisend.platform.notification.domain.model.aggregates.Notif
 import com.example.nutrisend.platform.notification.domain.model.commands.CreateNotificationCommand;
 import com.example.nutrisend.platform.notification.domain.model.queries.GetAllNotificationsQuery;
 import com.example.nutrisend.platform.notification.domain.model.queries.GetNotificationByIdQuery;
-import com.example.nutrisend.platform.notification.domain.model.queries.GetNotificationsByUserIdQuery;
 import com.example.nutrisend.platform.notification.domain.services.NotificationCommandService;
 import com.example.nutrisend.platform.notification.domain.services.NotificationQueryService;
 import com.example.nutrisend.platform.notification.interfaces.rest.resources.CreateNotificationResource;
@@ -103,4 +102,6 @@ public class NotificationController {
         var updatedNotificationResource = NotificationResourceFromEntityAssembler.toResourceFromEntity(updatedNotificationEntity);
         return ResponseEntity.ok(updatedNotificationResource);
     }
+
+
 }
