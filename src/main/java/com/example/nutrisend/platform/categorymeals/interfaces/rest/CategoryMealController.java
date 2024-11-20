@@ -24,7 +24,7 @@ import java.util.List;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping(value = "/api/v1", produces = APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/v1/category", produces = APPLICATION_JSON_VALUE)
 @Tag(name = "Category Meals", description = "Available Category Meals Endpoints")
 public class CategoryMealController {
     private final CategoryMealsQueryService categoryMealsQueryService;
@@ -36,7 +36,7 @@ public class CategoryMealController {
     }
 
     // Get /api/v1/category
-    @GetMapping("/category")
+    @GetMapping
     @Operation(summary = "Get all categories", description = "Get all categories")
     @ApiResponses( value =  {
             @ApiResponse(responseCode = "200", description = "Categories found"),
