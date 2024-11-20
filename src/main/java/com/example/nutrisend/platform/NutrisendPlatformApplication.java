@@ -22,8 +22,10 @@ public class NutrisendPlatformApplication {
 				@Override
 				public void addCorsMappings(CorsRegistry registry) {
 					registry.addMapping("/**")
-							.allowedMethods("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH");
-				}
+							.allowedOrigins("https://graceful-respect-production.up.railway.app")
+							.allowedMethods("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH")
+							.allowedHeaders("*")
+							.allowCredentials(true);}
 			};
 		}
 	}
